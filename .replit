@@ -15,10 +15,6 @@ author = "agent"
 task = "workflow.run"
 args = "MarsPortalApp"
 
-[[workflows.workflow.tasks]]
-task = "workflow.run"
-args = "swift_mars_portal"
-
 [[workflows.workflow]]
 name = "MarsPortalApp"
 author = "agent"
@@ -31,22 +27,7 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "swift run"
-waitForPort = 5000
-
-[[workflows.workflow]]
-name = "swift_mars_portal"
-author = "agent"
-
-[workflows.workflow.metadata]
-agentRequireRestartOnSave = false
-
-[[workflows.workflow.tasks]]
-task = "packager.installForAll"
-
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd MarsPortal.swiftpm && swift run"
+args = "cd marsportal.swiftpm && swift run"
 
 [deployment]
 run = ["sh", "-c", "swift run"]
