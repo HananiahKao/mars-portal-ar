@@ -1,0 +1,26 @@
+version = 1
+requires-python = ">=3.11"
+
+[[package]]
+name = "repl-nix-workspace"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "usd-core" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "usd-core", specifier = ">=25.2.post1" }]
+
+[[package]]
+name = "usd-core"
+version = "25.2.post1"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/f5/7d/0e7fef1473524c14da04e40e70cd0995f2277538e2cc6b474d317b069a40/usd_core-25.2.post1-cp311-none-macosx_10_9_universal2.whl", hash = "sha256:b84c67930f5963d619897b13132f9ba67274b168a7b29974481543098c8ea9ad", size = 37806984 },
+    { url = "https://files.pythonhosted.org/packages/19/22/e1364d1b35c052e91e342d0851bf7ea67e01509a93803704f5446b9099c3/usd_core-25.2.post1-cp311-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6e1e94d6a0ac8a3c80967b277cdbcf4bbaa876b29ad681b4eca46a2ddf08f18a", size = 25563304 },
+    { url = "https://files.pythonhosted.org/packages/d3/f7/b8993e6be9614f626447cc3b22f7181a5721a8ac38878461c3ddf74ad090/usd_core-25.2.post1-cp311-none-win_amd64.whl", hash = "sha256:f53d40a5f355a297724d33789da09aa2c867429c9356f413d1d1514c972a18a7", size = 13243806 },
+    { url = "https://files.pythonhosted.org/packages/64/6d/121b982a12951b715d5073a2ac8742c800f52985d3a22660036ca2b36831/usd_core-25.2.post1-cp312-none-macosx_10_9_universal2.whl", hash = "sha256:1db74308772645bc5d46e77fe62280e9507210903aaaa7729102c2d1bced7ce8", size = 38011647 },
+    { url = "https://files.pythonhosted.org/packages/e4/b3/f9d3dac212409b0891e7b39e19bb311c324c860623fbb1f94602bf0b6ef7/usd_core-25.2.post1-cp312-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:57e223cd8df22fb1960555fff4fb623fbc7f488367a82241db1f82459b8ece84", size = 25486167 },
+    { url = "https://files.pythonhosted.org/packages/4d/7c/c59de16e660fe9ce2676915d99ef87c190af978d7e06b61f0f73481f340d/usd_core-25.2.post1-cp312-none-win_amd64.whl", hash = "sha256:d16b735bb758951c173d8622cada3d839d2ebe5400f8ae062548921d7a1cd597", size = 13278680 },
+]
