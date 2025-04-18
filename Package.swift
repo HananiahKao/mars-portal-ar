@@ -4,7 +4,10 @@ import PackageDescription
 
 let package = Package(
     name: "MarsPortal",
-    platforms: [.macOS(.v10_15)],
+    platforms: [
+        .iOS(.v15),
+        .macOS(.v12)
+    ],
     products: [
         .library(
             name: "MarsPortal",
@@ -13,7 +16,9 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MarsPortal"
+            name: "MarsPortal",
+            dependencies: [],
+            resources: [.process("Resources")]
         )
     ]
 )
