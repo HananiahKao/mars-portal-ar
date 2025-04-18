@@ -4,52 +4,59 @@ An immersive iPadOS Augmented Reality (AR) application that transforms your spac
 
 ## Features
 
-- Augmented Reality portal to Mars environment
-- Interactive 3D models of astronauts and scientific stations
-- Realistic Martian terrain with ambient effects
-- Touch interactions with virtual objects
-- Dynamic lighting and atmospheric effects
+- AR portal to Mars environment
+- Realistic 3D models of Martian terrain, scientific station, and astronaut
+- Interactive AR entities with gesture recognition
+- Custom AR materials and lighting for realistic Mars environment
+- Control panel for managing AR scene
+- Object information display for educational content
 
 ## Technical Details
 
-- Built with Swift and SwiftUI
-- Uses RealityKit for 3D rendering
-- ARKit for augmented reality capabilities
-- USDZ 3D model integration
-- Designed for iPadOS 15+ with LiDAR sensors
+- Swift 5.5+
+- iOS/iPadOS 15.0+
+- Frameworks: SwiftUI, RealityKit, ARKit
+- 3D model format: USDZ
+
+## Setup and Installation
+
+1. Clone the repository
+2. Open the project in Xcode
+3. Select an iOS device with LiDAR capabilities (iPad Pro or iPhone Pro)
+4. Build and run the application
 
 ## Requirements
 
-- iPad with LiDAR sensor (iPad Pro 2020 or newer, iPad Air 4th gen or newer)
-- iPadOS 15 or later
-- Xcode 13 or later (for development)
+- iOS/iPadOS 15.0 or later
+- Device with LiDAR sensor (iPad Pro 2020 or newer, iPhone 12 Pro or newer)
 
-## Installation
+## Project Structure
 
-1. Clone this repository
-2. Open the project in Xcode or Swift Playgrounds
-3. Build and run on a compatible iPad device
-
-## Usage
-
-1. Launch the app and point your iPad at a horizontal surface
-2. Tap to place the Mars portal
-3. Look through the portal to see the Martian landscape
-4. Tap on astronauts or stations to interact with them
-5. Use the control panel to customize your view
-
-## Development
-
-This project is structured as a Swift Package with RealityKit and ARKit dependencies. The 3D models are stored as USDZ files and are loaded at runtime.
-
-### Project Structure
-
-- `Sources/MarsPortal/` - Main application code
-  - `Models/` - Interactive entity models
-  - `Views/` - SwiftUI views for UI
-  - `Utilities/` - Helper functions and configurations
-- `Resources/` - 3D models and assets
+```
+MarsPortal/
+├── Package.swift              # Swift Package manifest
+├── Sources/
+│   └── MarsPortal/            # Main application source code
+│       ├── MarsPortalApp.swift       # App entry point
+│       ├── ContentView.swift         # Main view
+│       ├── ARViewContainer.swift     # AR view container
+│       ├── MarsARView.swift          # Custom AR view
+│       ├── Models/                   # Data models
+│       │   ├── Astronaut.swift
+│       │   ├── InteractiveEntity.swift
+│       │   └── ScientificStation.swift
+│       ├── Views/                    # UI components
+│       │   ├── ControlPanel.swift
+│       │   └── ObjectInfoView.swift
+│       ├── Utilities/                # Helper classes
+│       │   ├── MarsConfiguration.swift
+│       │   └── PortalMaterial.swift
+│       └── Resources/                # 3D models and assets
+│           ├── astronaut.usdz
+│           ├── mars_terrain.usdz
+│           └── station.usdz
+```
 
 ## License
 
-MIT License
+See the LICENSE file for details.
