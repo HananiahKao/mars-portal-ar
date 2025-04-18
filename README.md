@@ -17,7 +17,7 @@ The Mars Portal AR application transforms your iPad into a window to Mars, creat
 ## Technical Details
 
 - Built with Swift, SwiftUI, RealityKit and ARKit
-- Uses USDZ 3D models for high-quality assets
+- Uses authentic USDZ 3D models from Apple's AR Quick Look gallery
 - Interactive entity system for object examination
 - Custom shaders for the portal effect
 - Motion tracking for immersive viewing experience
@@ -30,9 +30,16 @@ The Mars Portal AR application transforms your iPad into a window to Mars, creat
 
 ## Installation
 
-1. Clone this repository
+1. Clone this repository: `git clone https://github.com/HananiahKao/mars-portal-ar.git`
 2. Open the `marsportal.swiftpm` file in Xcode
-3. Build and run on your iPad
+3. Build and run on your iPad with LiDAR
+
+## 3D Models
+
+The project includes the following 3D models:
+- **Astronaut**: An authentic astronaut 3D model from Apple's AR Quick Look gallery
+- **Mars Terrain**: A 3D model representing the Martian landscape (using Apple's Lego Falcon model as placeholder)
+- **Scientific Station**: A station model for interactive examination (using Apple's RetroTV model as placeholder)
 
 ## License
 
