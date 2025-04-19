@@ -12,6 +12,10 @@ let package = Package(
         .library(
             name: "MarsPortal",
             targets: ["MarsPortal"]
+        ),
+        .executable(
+            name: "MarsPortal",
+            targets: ["MarsPortal"]
         )
     ],
     targets: [
