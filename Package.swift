@@ -16,7 +16,7 @@ let package = Package(
         ),
         .executable(
             name: "MarsPortalApp",
-            targets: ["MarsPortalApp"]
+            targets: ["MarsPortal"]
         )
     ],
     targets: [
