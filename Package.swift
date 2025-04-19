@@ -1,33 +1,22 @@
-
 // swift-tools-version: 5.6
-
 import PackageDescription
 
 let package = Package(
     name: "MarsPortal",
     platforms: [
-        .iOS(.v15),
-        .macOS(.v12)
+        .macOS(.v12),
+        .iOS(.v15)
     ],
     products: [
-        .library(
-            name: "MarsPortal",
-            targets: ["MarsPortal"]
-        ),
         .executable(
-            name: "MarsPortalApp",
+            name: "MarsPortal",
             targets: ["MarsPortal"]
         )
     ],
     targets: [
-        .target(
-            name: "MarsPortal",
-            dependencies: [],
-            resources: [.process("Resources")]
-        ),
         .executableTarget(
-            name: "MarsPortalApp",
-            dependencies: ["MarsPortal"]
+            name: "MarsPortal",
+            dependencies: []
         )
     ]
 )
