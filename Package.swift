@@ -9,15 +9,24 @@ let package = Package(
     ],
     products: [
         .iOSApplication(
-            name: "MarsPortal",
+            name: "Mars Portal",
             targets: ["MarsPortal"],
-            bundleIdentifier: "com.yourcompany.MarsPortal",
-            teamIdentifier: "YOURTEAMID",
+            bundleIdentifier: "com.hananiah.mars-portal",
+            teamIdentifier: "HANANIAH",
             displayVersion: "1.0",
             bundleVersion: "1",
-            iconAssetName: "AppIcon",
-            accentColorAssetName: "AccentColor"
-        )
+            appIcon: .placeholder(icon: .palette),
+            accentColor: .presetColor(.blue),
+            supportedDeviceFamilies: [
+                .pad,
+                .phone
+            ],
+            supportedInterfaceOrientations: [
+                .portrait,
+                .landscapeRight,
+                .landscapeLeft
+            ]
+        
     ],
     targets: [
         .executableTarget(
