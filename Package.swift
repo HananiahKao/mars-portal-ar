@@ -1,3 +1,4 @@
+
 // swift-tools-version: 5.6
 
 import PackageDescription
@@ -14,8 +15,8 @@ let package = Package(
             targets: ["MarsPortal"]
         ),
         .executable(
-            name: "MarsPortal",
-            targets: ["MarsPortal"]
+            name: "MarsPortalApp",
+            targets: ["MarsPortalApp"]
         )
     ],
     targets: [
@@ -23,6 +24,10 @@ let package = Package(
             name: "MarsPortal",
             dependencies: [],
             resources: [.process("Resources")]
+        ),
+        .executableTarget(
+            name: "MarsPortalApp",
+            dependencies: ["MarsPortal"]
         )
     ]
 )
