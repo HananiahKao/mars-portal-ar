@@ -7,7 +7,7 @@ struct ARViewContainer: UIViewRepresentable {
     @Binding var selectedEntity: InteractiveEntity?
     var marsConfig: MarsConfiguration
     
-    private var cancellables = Set<AnyCancellable>()
+    //private var cancellables = Set<AnyCancellable>()
     
     func makeUIView(context: Context) -> MarsARView {
         let arView = MarsARView(frame: .zero, configuration: marsConfig)
@@ -29,8 +29,12 @@ struct ARViewContainer: UIViewRepresentable {
         arView.session.run(config)
         
         // Subscribe to tap gestures
-        arView.installGestures(.all, for: nil)
-        
+        for anchor in arView.scene.anchors {
+            if let modelEntity = anchor as? ( any HasCollision) {
+                modelEntity.generateCollisionShapes(recursive: true)
+                arView.installGestures(.all, for: modelEntity)
+            }
+        }
         // Set up entity selection
         context.coordinator.arView = arView
         arView.selectionHandler = { entity in
