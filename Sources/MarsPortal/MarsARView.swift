@@ -18,7 +18,7 @@ class MarsARView: ARView {
         super.init(frame: frame)
         currentConfiguration = configuration
         setupMarsScene()
-        setupTapGesture()
+        //setupTapGesture()
         
         // Set up coaching overlay
         let coachingOverlay = ARCoachingOverlayView()
@@ -44,6 +44,7 @@ class MarsARView: ARView {
     
     // Setup the Mars scene with portal
     private func setupMarsScene() {
+        print(#function)
         // Create a placement anchor for the portal
         placementAnchor = AnchorEntity(plane: .horizontal, classification: .floor, minimumBounds: [0.5, 0.5])
         scene.addAnchor(placementAnchor!)
@@ -54,6 +55,7 @@ class MarsARView: ARView {
     }
     
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        print(#function)
         let tapLocation = sender.location(in: self)
         
         // First check if we're tapping on an existing entity
@@ -73,6 +75,7 @@ class MarsARView: ARView {
     }
     
     private func createMarsPortal(at transform: simd_float4x4) {
+        print(#function)
         // Create a portal anchor at the tap location
         portalAnchor = AnchorEntity(world: transform)
         scene.addAnchor(portalAnchor!)
@@ -99,12 +102,13 @@ class MarsARView: ARView {
     }
     
     private func createMarsEnvironment() {
+        print(#function)
         guard let portalAnchor = portalAnchor else { return }
         
         // Create a Mars terrain entity
         do {
             // Try to load Mars terrain model
-            let marsTerrainEntity = try ModelEntity.load(named: "mars_terrain")
+            let marsTerrainEntity = try ModelEntity.load(named: "mars_terrain.usdz")
             
             // Scale and position the Mars terrain
             marsTerrainEntity.scale = [0.1, 0.1, 0.1]
@@ -126,9 +130,10 @@ class MarsARView: ARView {
             
             // Fallback: Create a simple Mars terrain using primitives
             let marsTerrainFallback = ModelEntity(
-                mesh: .generateBox(width: 10, height: 0.5, depth: 10),
+                mesh: .generateBox(width: 1, height: 1, depth: 0.5),
                 materials: [PortalMaterial.createMarsTerrainMaterial()]
             )
+            print("model init")
             marsTerrainFallback.position = [0, -1.5, -3.0]
             
             marsScene = Entity()
@@ -145,6 +150,7 @@ class MarsARView: ARView {
     }
     
     private func addMarsAtmosphere() {
+        print(#function)
         guard let marsScene = marsScene else { return }
         
         // Create a particle system for dust
@@ -153,7 +159,7 @@ class MarsARView: ARView {
         
         // Add reddish directional light for Mars sunlight
         let directionalLight = DirectionalLight()
-        directionalLight.light.color = .init(red: 1.0, green: 0.7, blue: 0.6)
+        directionalLight.light.color = .init(red: 1.0, green: 0.7, blue: 0.6, alpha: 1)
         directionalLight.light.intensity = 1500
         directionalLight.shadow = DirectionalLightComponent.Shadow(maximumDistance: 20, depthBias: 0.1)
         directionalLight.orientation = simd_quatf(angle: -.pi / 3, axis: [1, 0, 0])
@@ -161,6 +167,7 @@ class MarsARView: ARView {
     }
     
     private func createDustParticleSystem() -> Entity {
+        print(#function)
         let particleSystem = Entity()
         
         // In a real app, we would create a particle system here
@@ -176,19 +183,22 @@ class MarsARView: ARView {
     }
     
     private func addScientificStations() {
+        print(#function)
         guard let marsScene = marsScene else { return }
         
         // Create and add scientific stations to the Mars scene
+        print("hello")
         let stationPositions: [SIMD3<Float>] = [
             [-1.0, -1.2, -4.0],
             [1.2, -1.2, -3.5],
             [0.0, -1.2, -5.0]
         ]
-        
+        print("hello")
         let stationTypes = ["Research Lab", "Communication Center", "Power Station"]
-        
+        print("hello")
         for i in 0..<min(stationPositions.count, stationTypes.count) {
             let station = ScientificStation(name: stationTypes[i], description: "A \(stationTypes[i].lowercased()) for Mars operations")
+            print("A \(stationTypes[i].lowercased()) for Mars operations")
             station.position = stationPositions[i]
             station.scale = [0.3, 0.3, 0.3]
             
@@ -198,6 +208,7 @@ class MarsARView: ARView {
     }
     
     private func addAstronauts() {
+        print(#function)
         guard let marsScene = marsScene else { return }
         
         // Create and add astronauts to the Mars scene
@@ -222,6 +233,7 @@ class MarsARView: ARView {
     }
     
     private func animateAstronaut(_ astronaut: Astronaut) {
+        print(#function)
         // Create a simple movement animation
         let initialPosition = astronaut.position
         let targetPosition = initialPosition + SIMD3<Float>(0.0, 0.0, -0.5)
@@ -231,25 +243,17 @@ class MarsARView: ARView {
         let moveBack = Transform(scale: .one, rotation: astronaut.orientation, translation: initialPosition)
         
         astronaut.move(to: moveForward, relativeTo: marsScene, duration: 5.0, timingFunction: .easeInOut)
-            .completionHandler = { [weak self, weak astronaut] in
-                guard let astronaut = astronaut else { return }
-                
-                astronaut.move(to: moveBack, relativeTo: self?.marsScene, duration: 5.0, timingFunction: .easeInOut)
-                    .completionHandler = { [weak self, weak astronaut] in
-                        // Repeat the animation
-                        if let astronaut = astronaut {
-                            self?.animateAstronaut(astronaut)
-                        }
-                    }
-            }
+        astronaut.move(to: moveBack, relativeTo: marsScene, duration: 5.0, timingFunction: .easeInOut)
     }
     
     private func setupTapGesture() {
+        print(#function)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleEntityTap(_:)))
         self.addGestureRecognizer(tapGesture)
     }
     
     @objc private func handleEntityTap(_ sender: UITapGestureRecognizer) {
+        print(#function)
         let tapLocation = sender.location(in: self)
         
         guard let entity = self.entity(at: tapLocation) else { return }
@@ -266,6 +270,7 @@ class MarsARView: ARView {
     }
     
     private func updateScene(_ event: SceneEvents.Update) {
+        //print(#function)
         // Update astronaut animations or other time-based effects
         for astronaut in astronauts {
             if currentConfiguration.animateAstronauts {
