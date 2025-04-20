@@ -1,0 +1,71 @@
+#usda 1.0
+(
+    defaultPrim = "Station"
+    upAxis = "Y"
+)
+
+def Xform "Station" (
+    kind = "component"
+)
+{
+    def Sphere "MainModule"
+    {
+        double radius = 2.0
+        matrix4d xformOp:transform = ( (1, 0, 0.5, 0), (0, 0.5, 0, 0), (0, 0, 1, 0), (0, 1.0, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.9, 0.9, 0.9)]
+    }
+    
+    def Cylinder "Base"
+    {
+        double radius = 2.2
+        double height = 0.2
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0.1, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.8, 0.8, 0.8)]
+    }
+    
+    def Cube "SolarPanel1"
+    {
+        double size = 1.0
+        matrix4d xformOp:transform = ( (3.0, 0, 0, 0), (0, 0.1, 0, 0), (0, 0, 1.5, 0), (2.0, 1.5, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.2, 0.2, 0.8)]
+    }
+    
+    def Cube "SolarPanel2"
+    {
+        double size = 1.0
+        matrix4d xformOp:transform = ( (3.0, 0, 0, 0), (0, 0.1, 0, 0), (0, 0, 1.5, 0), (-2.0, 1.5, 0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.2, 0.2, 0.8)]
+    }
+    
+    def Cylinder "DishBase"
+    {
+        double radius = 0.15
+        double height = 1.0
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (1.5, 2.0, 1.5, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.8, 0.8, 0.8)]
+    }
+    
+    def Cone "Dish"
+    {
+        double radius = 0.5
+        double height = 0.3
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, -1, 0, 0), (0, 0, 1, 0), (1.5, 2.5, 1.5, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.7, 0.7, 0.7)]
+    }
+    
+    def Cylinder "Entrance"
+    {
+        double radius = 0.5
+        double height = 1.5
+        token axis = "Z"
+        matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0.0, 0.8, 2.0, 1) )
+        uniform token[] xformOpOrder = ["xformOp:transform"]
+        color3f[] primvars:displayColor = [(0.85, 0.85, 0.85)]
+    }
+}
