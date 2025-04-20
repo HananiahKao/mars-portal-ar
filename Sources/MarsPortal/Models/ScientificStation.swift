@@ -1,15 +1,13 @@
 import RealityKit
 import Foundation
 
-class ScientificStation: Entity, InteractiveEntity {
-    var name: String
-    var description: String
-    
-    init(name: String, description: String) {
+class ScientificStation: InteractiveEntity {
+    required init(name: String, description: String) {
+        super.init(name: name, description: description)
+        
         self.name = name
         self.description = description
         
-        super.init()
         
         // Try to load station model
         do {
@@ -22,13 +20,14 @@ class ScientificStation: Entity, InteractiveEntity {
         }
         
         // Add a collision component for tap detection
-        self.collision = CollisionComponent(shapes: [.generateBox(width: 0.5, height: 0.5, depth: 0.5)])
+        //TODO: check if that is necessary with ARViewContainer line 35's "arView.installGestures(.all, for: modelEntity)"
+        //self.collision = CollisionComponent(shapes: [.generateBox(width: 0.5, height: 0.5, depth: 0.5)])
     }
     
     required init() {
+        super.init(name: "Unknown Station", description: "Scientific research station")
         self.name = "Unknown Station"
         self.description = "Scientific research station"
-        super.init()
         createFallbackModel()
     }
     
@@ -97,19 +96,20 @@ class ScientificStation: Entity, InteractiveEntity {
         
         // Add station-specific interaction animation
         // For example, make the station light up or emit particles
-        let originalColor = self.children[0].children[0].model?.materials[0].tintColor
+        let stationMaterial = (self.children.compactMap {$0 as? ModelEntity}.first?.model?.materials.first as? SimpleMaterial)
+        let originalColor = stationMaterial?.color
         
         // Change color temporarily
-        if var material = self.children[0].children[0].model?.materials[0] as? SimpleMaterial {
-            material.tintColor = .white
-            self.children[0].children[0].model?.materials = [material]
+        if var material = stationMaterial {
+            material.color.tint = .white
+            self.children.compactMap {$0 as? ModelEntity}.first?.model?.materials = [material]
             
             // Revert back after a delay
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 if let originalColor = originalColor {
-                    if var material = self.children[0].children[0].model?.materials[0] as? SimpleMaterial {
-                        material.tintColor = originalColor
-                        self.children[0].children[0].model?.materials = [material]
+                    if var material = stationMaterial {
+                        material.color.tint = originalColor.tint
+                        self.children.compactMap {$0 as? ModelEntity}.first?.model?.materials = [material]
                     }
                 }
             }
