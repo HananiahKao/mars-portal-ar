@@ -1,15 +1,13 @@
 import RealityKit
 import Foundation
 
-class Astronaut: Entity, InteractiveEntity {
-    var name: String
-    var description: String
-    
-    init(name: String, description: String) {
+class Astronaut: InteractiveEntity {
+    required init(name: String, description: String) {
+         print(#function)
+        super.init(name: name, description: description)
+        
         self.name = name
         self.description = description
-        
-        super.init()
         
         // Try to load astronaut model
         do {
@@ -22,21 +20,23 @@ class Astronaut: Entity, InteractiveEntity {
         }
         
         // Add a collision component for tap detection
-        self.collision = CollisionComponent(shapes: [.generateCapsule(height: 1.8, radius: 0.3)])
+        //TODO: check if that is necessary with ARViewContainer line 35's "arView.installGestures(.all, for: modelEntity)"
+        //self.collision = CollisionComponent(shapes: [.generateCapsule(height: 1.8, radius: 0.3)])
     }
     
     required init() {
+        super.init(name: "Unknown Astronaut", description: "Mars astronaut")
         self.name = "Unknown Astronaut"
         self.description = "Mars astronaut"
-        super.init()
         createFallbackModel()
     }
     
     private func createFallbackModel() {
+        print(#function)
         // Create a simple geometric representation of an astronaut
         // Body - white spacesuit
         let body = ModelEntity(
-            mesh: .generateCapsule(height: 1.0, radius: 0.3),
+            mesh: .generateBox(width: 0.5, height: 1.0, depth: 0.5, cornerRadius: 0.3),
             materials: [SimpleMaterial(color: .white, isMetallic: false)]
         )
         
@@ -49,14 +49,14 @@ class Astronaut: Entity, InteractiveEntity {
         
         // Arms
         let leftArm = ModelEntity(
-            mesh: .generateCapsule(height: 0.6, radius: 0.1),
+            mesh: .generateBox(width: 0.1, height: 0.6, depth: 0.1, cornerRadius: 0.1),
             materials: [SimpleMaterial(color: .white, isMetallic: false)]
         )
         leftArm.position = [-0.3, 0.1, 0]
         leftArm.orientation = simd_quatf(angle: -.pi/6, axis: [0, 0, 1])
         
         let rightArm = ModelEntity(
-            mesh: .generateCapsule(height: 0.6, radius: 0.1),
+            mesh: .generateBox(width: 0.1, height: 0.6, depth: 0.1, cornerRadius: 0.1),
             materials: [SimpleMaterial(color: .white, isMetallic: false)]
         )
         rightArm.position = [0.3, 0.1, 0]
@@ -64,13 +64,13 @@ class Astronaut: Entity, InteractiveEntity {
         
         // Legs
         let leftLeg = ModelEntity(
-            mesh: .generateCapsule(height: 0.7, radius: 0.12),
+            mesh: .generateBox(width: 0.2, height: 0.7, depth: 0.2, cornerRadius: 0.12),
             materials: [SimpleMaterial(color: .white, isMetallic: false)]
         )
         leftLeg.position = [-0.15, -0.5, 0]
         
         let rightLeg = ModelEntity(
-            mesh: .generateCapsule(height: 0.7, radius: 0.12),
+            mesh: .generateBox(width: 0.2, height: 0.7, depth: 0.2, cornerRadius: 0.12),
             materials: [SimpleMaterial(color: .white, isMetallic: false)]
         )
         rightLeg.position = [0.15, -0.5, 0]
@@ -100,35 +100,28 @@ class Astronaut: Entity, InteractiveEntity {
         if let leftArm = self.findEntity(named: "leftArm") {
             // Save original transform
             let originalOrientation = leftArm.orientation
-            
+            let originalTransform = Transform(rotation: originalOrientation, translation: leftArm.transform.translation)
             // Wave animation
             let waveUp = simd_quatf(angle: -.pi/2, axis: [0, 0, 1])
+            let waveUpTransform = Transform(rotation: waveUp, translation: leftArm.transform.translation)
             
-            withAnimation(.easeInOut(duration: 0.5)) {
-                leftArm.orientation = waveUp
-            }
-            
+            leftArm.move(to: waveUpTransform, relativeTo: leftArm.parent, duration: 0.5)
             // Return to original position
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    leftArm.orientation = originalOrientation
-                }
+                leftArm.move(to: originalTransform, relativeTo: leftArm.parent, duration: 0.5)
             }
         } else {
             // If we're using the fallback model, animate the whole astronaut
-            let originalPosition = self.position
+            let originalPosition = self.transform.translation
             let jumpHeight: Float = 0.2
-            
+            let originalTransform = Transform(rotation: self.orientation, translation: originalPosition)
+            let jumpHightestTransform = Transform(rotation: self.orientation, translation: [originalPosition.x, originalPosition.y + jumpHeight, originalPosition.z])
             // Jump animation
-            withAnimation(.easeOut(duration: 0.3)) {
-                self.position.y += jumpHeight
-            }
+            self.move(to: jumpHightestTransform, relativeTo: self.parent, duration: 0.3)
             
             // Return to original position
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                withAnimation(.easeIn(duration: 0.3)) {
-                    self.position = originalPosition
-                }
+                self.move(to: originalTransform, relativeTo: self.parent, duration: 0.3)
             }
         }
     }
