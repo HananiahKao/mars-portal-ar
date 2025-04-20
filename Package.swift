@@ -32,7 +32,8 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "MarsPortal",
-            dependencies: []
+            dependencies: [],
+            resources: [.process("Resources")]
         )
     ]
 )
